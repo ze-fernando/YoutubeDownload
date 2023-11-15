@@ -1,18 +1,29 @@
 const route = require('express').Router();
-const video = require('../service/service');
+const ytdl = require('../service/service');
 
 route.post('/mp3', async (req, res)=>{
     var url = req.body.url;
-    await audio(url);
+    try {
+        await ytdl.Audio(url);
+        res.status(200).json({message: 'Successful download'});        
+    } catch (err) {
+        res.status(500).json({message: 'Download error'});
+        console.log(err)
+    }
+        
 
-    return res.status(200).send('OK');
 });
 
 route.post('/mp4', async (req, res)=>{
     var url = req.body.url;
-    video(url);
-
-    res.status(201).json({message: 'Successful download'});
+    try {
+        await ytdl.Video(url);
+        res.status(200).json({message: 'Successful download'});
+    }
+    catch (err){
+        res.status(500).json({message: 'Download error'});
+        console.log(err);
+    }
 });
 
 module.exports = route;
