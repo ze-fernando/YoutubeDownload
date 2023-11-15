@@ -12,7 +12,7 @@ route.post('/mp4', async (req, res)=>{
     var url = req.body.url;
     video(url);
 
-    return res.status(200);
+    res.status(201).json({message: 'Successful download'});
 });
 
 module.exports = route;
